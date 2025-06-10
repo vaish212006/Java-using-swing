@@ -1,0 +1,104 @@
+
+=== Welcome to Bank Management System ===
+
+Select Portal:
+1. Customer
+2. Employee
+3. Admin
+4. Exit
+Choice: 1
+
+-- Customer Menu --
+1. Deposit Money
+2. Withdraw Money
+3. Show Balance
+4. Apply Interest
+5. Logout
+Choice: 1
+Enter amount to deposit: 500
+Deposited: 500.0
+
+-- Customer Menu --
+1. Deposit Money
+2. Withdraw Money
+3. Show Balance
+4. Apply Interest
+5. Logout
+Choice: 2
+Enter amount to withdraw: 100
+Withdrawn: 100.0
+
+-- Customer Menu --
+1. Deposit Money
+2. Withdraw Money
+3. Show Balance
+4. Apply Interest
+5. Logout
+Choice: 3
+Current Balance: 1400.0
+
+-- Customer Menu --
+1. Deposit Money
+2. Withdraw Money
+3. Show Balance
+4. Apply Interest
+5. Logout
+Choice: 5
+
+Select Portal:
+1. Customer
+2. Employee
+3. Admin
+4. Exit
+Choice: 2
+
+-- Employee Menu --
+1. View Profile
+2. Back
+Choice: 1
+Employee ID: E101
+Name: Bob
+Position: Manager
+
+-- Employee Menu --
+1. View Profile
+2. Back
+Choice: 2
+
+Select Portal:
+1. Customer
+2. Employee
+3. Admin
+4. Exit
+Choice: 3
+
+-- Admin Menu --
+1. View Customer Profile
+2. View Employee Profile
+3. Back
+Choice: 1
+Customer Name: Alice
+Account Balance: 1400.0
+
+-- Admin Menu --
+1. View Customer Profile
+2. View Employee Profile
+3. Back
+Choice: 2
+Employee ID: E101
+Name: Bob
+Position: Manager
+
+-- Admin Menu --
+1. View Customer Profile
+2. View Employee Profile
+3. Back
+Choice: 3
+
+Select Portal:
+1. Customer
+2. Employee
+3. Admin
+4. Exit
+Choice: 4
+Thank you for using the Bank Management System. Goodbye!

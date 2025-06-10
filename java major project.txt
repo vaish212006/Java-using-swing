@@ -1,0 +1,190 @@
+import java.util.Scanner;
+
+// BankAccount class with encapsulation
+class BankAccount {
+    private double balance;
+
+    public BankAccount(double initialBalance) {
+        this.balance = initialBalance;
+    }
+
+    public void deposit(double amount) {
+        if (amount > 0) {
+            balance += amount;
+            System.out.println("Deposited: " + amount);
+        } else {
+            System.out.println("Invalid amount!");
+        }
+    }
+
+    public void withdraw(double amount) {
+        if (amount > 0 && balance >= amount) {
+            balance -= amount;
+            System.out.println("Withdrawn: " + amount);
+        } else {
+            System.out.println("Insufficient balance or invalid amount!");
+        }
+    }
+
+    public double getBalance() {
+        return balance;
+    }
+
+    public void applyInterest(double rate) {
+        balance += balance * rate / 100;
+        System.out.println("Interest applied at rate: " + rate + "%");
+    }
+}
+
+// Customer class
+class Customer {
+    private String name;
+    private BankAccount account;
+
+    public Customer(String name, double initialBalance) {
+        this.name = name;
+        this.account = new BankAccount(initialBalance);
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public BankAccount getAccount() {
+        return account;
+    }
+}
+
+// Employee class
+class Employee {
+    private String employeeId;
+    private String name;
+    private String position;
+
+    public Employee(String employeeId, String name, String position) {
+        this.employeeId = employeeId;
+        this.name = name;
+        this.position = position;
+    }
+
+    public void viewProfile() {
+        System.out.println("Employee ID: " + employeeId);
+        System.out.println("Name: " + name);
+        System.out.println("Position: " + position);
+    }
+}
+
+// Admin class
+class Admin {
+    public void viewCustomerProfile(Customer customer) {
+        System.out.println("Customer Name: " + customer.getName());
+        System.out.println("Account Balance: " + customer.getAccount().getBalance());
+    }
+
+    public void viewEmployeeProfile(Employee employee) {
+        employee.viewProfile();
+    }
+}
+
+// Main class for Bank Management System
+public class BankManagementSystem {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        // Sample data
+        Customer customer = new Customer("Alice", 1000);
+        Employee employee = new Employee("E101", "Bob", "Manager");
+        Admin admin = new Admin();
+
+        System.out.println("=== Welcome to Bank Management System ===");
+
+        while (true) {
+            System.out.println("\nSelect Portal:");
+            System.out.println("1. Customer");
+            System.out.println("2. Employee");
+            System.out.println("3. Admin");
+            System.out.println("4. Exit");
+            System.out.print("Choice: ");
+            int choice = sc.nextInt();
+
+            if (choice == 1) {
+                // Customer Portal
+                while (true) {
+                    System.out.println("\n-- Customer Menu --");
+                    System.out.println("1. Deposit Money");
+                    System.out.println("2. Withdraw Money");
+                    System.out.println("3. Show Balance");
+                    System.out.println("4. Apply Interest");
+                    System.out.println("5. Logout");
+                    System.out.print("Choice: ");
+                    int cChoice = sc.nextInt();
+
+                    if (cChoice == 1) {
+                        System.out.print("Enter amount to deposit: ");
+                        double amt = sc.nextDouble();
+                        customer.getAccount().deposit(amt);
+                    } else if (cChoice == 2) {
+                        System.out.print("Enter amount to withdraw: ");
+                        double amt = sc.nextDouble();
+                        customer.getAccount().withdraw(amt);
+                    } else if (cChoice == 3) {
+                        System.out.println("Current Balance: " + customer.getAccount().getBalance());
+                    } else if (cChoice == 4) {
+                        System.out.print("Enter interest rate (%): ");
+                        double rate = sc.nextDouble();
+                        customer.getAccount().applyInterest(rate);
+                    } else if (cChoice == 5) {
+                        break; // Logout
+                    } else {
+                        System.out.println("Invalid choice.");
+                    }
+                }
+            } else if (choice == 2) {
+                // Employee Portal (added sub-menu for consistency)
+                while (true) {
+                    System.out.println("\n-- Employee Menu --");
+                    System.out.println("1. View Profile");
+                    System.out.println("2. Back");
+                    System.out.print("Choice: ");
+                    int eChoice = sc.nextInt();
+
+                    if (eChoice == 1) {
+                        employee.viewProfile();
+                    } else if (eChoice == 2) {
+                        break; // Back to main menu
+                    } else {
+                        System.out.println("Invalid choice.");
+                    }
+                }
+
+            } else if (choice == 3) {
+                // Admin Portal
+                while (true) {
+                    System.out.println("\n-- Admin Menu --");
+                    System.out.println("1. View Customer Profile");
+                    System.out.println("2. View Employee Profile");
+                    System.out.println("3. Back");
+                    System.out.print("Choice: ");
+                    int aChoice = sc.nextInt();
+
+                    if (aChoice == 1) {
+                        admin.viewCustomerProfile(customer);
+                    } else if (aChoice == 2) {
+                        admin.viewEmployeeProfile(employee);
+                    } else if (aChoice == 3) {
+                        break; // Back to main menu
+                    } else {
+                        System.out.println("Invalid choice.");
+                    }
+                }
+            } else if (choice == 4) {
+                System.out.println("Thank you for using the Bank Management System. Goodbye!");
+                break; // Exit program
+            } else {
+                System.out.println("Invalid choice.");
+            }
+        }
+
+        sc.close();
+    }
+}
