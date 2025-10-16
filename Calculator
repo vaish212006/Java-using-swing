@@ -1,0 +1,101 @@
+package vaishnavi;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
+public class Ex02calculator extends JFrame implements Serializable {
+    private final JTextField display = new JTextField();
+    private final List<String> tokens = new ArrayList<>();
+
+    public Ex02calculator() {
+        super("Calculator");
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setLayout(new BorderLayout());
+
+        display.setEditable(false);
+        display.setHorizontalAlignment(JTextField.RIGHT);
+        add(display, BorderLayout.NORTH);
+
+        JPanel grid = new JPanel(new GridLayout(4, 4, 5, 5));
+        String[] keys = {
+            "7", "8", "9", "+",
+            "4", "5", "6", "-",
+            "1", "2", "3", "*",
+            "0", "C", "=", "%"
+        };
+
+        for (String k : keys) {
+            JButton b = new JButton(k);
+            b.addActionListener(this::onKey);
+            grid.add(b);
+        }
+
+        add(grid, BorderLayout.CENTER);
+        setSize(300, 350);
+        setLocationRelativeTo(null);
+    }
+
+    private void onKey(ActionEvent e) {
+        String k = ((JButton) e.getSource()).getText();
+        switch (k) {
+            case "C":
+                tokens.clear();
+                display.setText("");
+                break;
+
+            case "=":
+                try {
+                    String result = evaluate();
+                    display.setText(result);
+                } catch (ArithmeticException ex) {
+                    JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage());
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(this, "Invalid expression");
+                } finally {
+                    tokens.clear();
+                }
+                break;
+
+            case "+": case "-": case "*": case "%":
+                tokens.add(display.getText().trim());
+                tokens.add(k);
+                display.setText("");
+                break;
+
+            default:
+                display.setText(display.getText() + k);
+        }
+    }
+
+    private String evaluate() {
+        tokens.add(display.getText().trim());
+        if (tokens.size() < 3) return tokens.get(0);
+
+        long acc = Long.parseLong(tokens.get(0));
+        for (int i = 1; i < tokens.size(); i += 2) {
+            String op = tokens.get(i);
+            long b = Long.parseLong(tokens.get(i + 1));
+
+            switch (op) {
+                case "+": acc += b; break;
+                case "-": acc -= b; break;
+                case "*": acc *= b; break;
+                case "%":
+                    if (b == 0) throw new ArithmeticException("Modulo by zero");
+                    acc %= b;
+                    break;
+                default:
+                    throw new IllegalStateException("Unexpected operator: " + op);
+            }
+        }
+        return String.valueOf(acc);
+    }
+
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(() -> new Ex02calculator().setVisible(true));
+    }
+}
