@@ -1,0 +1,26 @@
+package ec3108;
+
+import javax.swing.*;
+import java.awt.*;
+import java.io.Serializable;
+
+/**
+ * Exercise 3a:
+ * "Applet" message implemented as a Swing window.
+ */
+public class Ex03a_MessagePanel extends JFrame implements Serializable {
+	 private static final long serialVersionUID = 1L; // Or a generated value {
+    public Ex03a_MessagePanel() {
+        super("Message");
+        JLabel msg = new JLabel("Hello! This mimics an applet message.", SwingConstants.CENTER);
+        msg.setFont(msg.getFont().deriveFont(Font.BOLD, 18f));
+        add(msg);
+        setSize(400, 200);
+        setLocationRelativeTo(null);
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+    }
+
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(() -> new Ex03a_MessagePanel().setVisible(true));
+    }
+}
